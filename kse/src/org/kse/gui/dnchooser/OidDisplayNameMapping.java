@@ -19,12 +19,12 @@
  */
 package org.kse.gui.dnchooser;
 
+import org.bouncycastle.asn1.ASN1ObjectIdentifier;
+import org.bouncycastle.asn1.x500.style.BCStyle;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
-
-import org.bouncycastle.asn1.ASN1ObjectIdentifier;
-import org.bouncycastle.asn1.x500.style.BCStyle;
 
 /**
  * This class holds the mapping between the OIDs and the display names of RDN components.
@@ -46,7 +46,11 @@ public class OidDisplayNameMapping {
 	private static final String OU = res.getString("DistinguishedNameChooser.jlOrganisationUnit.text");
 	private static final String CN = res.getString("DistinguishedNameChooser.jlCommonName.text");
 	private static final String UID = res.getString("DistinguishedNameChooser.jlUserID.text");
-
+	
+	private static final String BUSINESS_CATEGORY = "BusinessCategory";
+	private static final String JURISDICTION_OF_INCORPORATION_COUNTRY_NAME  = "jurisdictionOfIncorporationCountryName";
+	private static final ASN1ObjectIdentifier JURISDICTION_OF_INCORPORATION_COUNTRY_NAME_AID  = new ASN1ObjectIdentifier("1.3.6.1.4.1.311.60.2.1.3");
+	
 	private static Map<String, ASN1ObjectIdentifier> displayNameToOID = new HashMap<>();
 	static {
 		displayNameToOID.put(CN, BCStyle.CN);
@@ -62,6 +66,10 @@ public class OidDisplayNameMapping {
 		displayNameToOID.put(SURNAME, BCStyle.SURNAME);
 		displayNameToOID.put(DC, BCStyle.DC);
 		displayNameToOID.put(UID, BCStyle.UID);
+		
+		
+		displayNameToOID.put(BUSINESS_CATEGORY, BCStyle.BUSINESS_CATEGORY);
+		displayNameToOID.put(JURISDICTION_OF_INCORPORATION_COUNTRY_NAME, JURISDICTION_OF_INCORPORATION_COUNTRY_NAME_AID);
 	}
 
 	private static Map<String, String> oidToDisplayName = new HashMap<>();
@@ -79,10 +87,14 @@ public class OidDisplayNameMapping {
 		oidToDisplayName.put(BCStyle.SURNAME.getId(), SURNAME);
 		oidToDisplayName.put(BCStyle.DC.getId(), DC);
 		oidToDisplayName.put(BCStyle.UID.getId(), UID);
+		
+		
+		oidToDisplayName.put(BCStyle.BUSINESS_CATEGORY.getId(), BUSINESS_CATEGORY);
+		oidToDisplayName.put(JURISDICTION_OF_INCORPORATION_COUNTRY_NAME_AID.getId(), JURISDICTION_OF_INCORPORATION_COUNTRY_NAME);
 	}
 
 	public static String[] getDisplayNames() {
-		return new String[]{ CN, OU, O, L, ST, C, E, SN, GIVENNAME, SURNAME, DC, UID };
+		return new String[]{ CN, OU, O, L, ST, C, E, SN, GIVENNAME, SURNAME, DC, UID, BUSINESS_CATEGORY, JURISDICTION_OF_INCORPORATION_COUNTRY_NAME };
 	}
 
 	public static ASN1ObjectIdentifier getOidForDisplayName(String displayName) {
